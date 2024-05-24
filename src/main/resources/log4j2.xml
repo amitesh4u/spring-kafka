@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error">
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <Async name="AsyncConsoleAppender">
+            <AppenderRef ref="ConsoleAppender" />
+        </Async>
+    </Appenders>
+    <Loggers>
+        <!-- Additivity: Gets or sets a value indicating if child loggers inherit their parent's appenders. -->
+      <AsyncLogger name="com.amitesh.springbootkafka" level="info" additivity="false" includeLocation="false">
+          <AppenderRef ref="ConsoleAppender" />
+      </AsyncLogger>
+      <AsyncRoot level="error">
+          <AppenderRef ref="AsyncConsoleAppender" />
+      </AsyncRoot>
+  </Loggers>
+</Configuration>

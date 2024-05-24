@@ -9,18 +9,31 @@
     <version>3.3.0</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
+
   <groupId>com.amitesh</groupId>
   <artifactId>springboot-kafka</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>springboot-kafka</name>
   <description>springboot-kafka</description>
+
   <properties>
     <java.version>21</java.version>
+    <!-- Logging configurations -->
+    <logging.disruptor.version>3.4.4</logging.disruptor.version>
+
   </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+      <!-- Exclude Spring Boot's Default Logging (Logback) -->
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.kafka</groupId>
@@ -31,6 +44,13 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+      <!-- Exclude Spring Boot's Default Logging (Logback) -->
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.kafka</groupId>
@@ -51,6 +71,24 @@
       <version>4.5.0-M1</version>
     </dependency>
 
+    <!-- Logging dependencies -->
+    <!-- Implementation for Apache Log4J -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+    </dependency>
+
+    <!-- Add Log4j2 Dependency in Spring -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-log4j2</artifactId>
+    </dependency>
+    <!-- Required for Async Logging with Log4j2 -->
+    <dependency>
+      <groupId>com.lmax</groupId>
+      <artifactId>disruptor</artifactId>
+      <version>${logging.disruptor.version}</version>
+    </dependency>
   </dependencies>
 
   <build>

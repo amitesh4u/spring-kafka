@@ -20,9 +20,8 @@ public class KafkaController {
 
   @PostMapping("/publish/{topic}")
   public ResponseEntity<String> produce(@PathVariable String topic,
-      @RequestParam(name = "key", required = false) Integer key,
       @RequestParam("message") String message) {
-    kafkaProducer.sendMessage(topic, key, message);
+    kafkaProducer.sendMessage(topic, message);
     return ResponseEntity.ok("Message Received");
   }
 }
