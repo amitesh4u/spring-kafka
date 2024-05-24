@@ -2,4 +2,4 @@
 POST http://localhost:8080/springboot-kafka/v1/kafka/publish/test-topic1?message=key1:topic1msg1
 
 ### Send a message to Topic 2
-POST http://localhost:8080/springboot-kafka/v1/kafka/publish/test-topic2?message=key2:topic2msg2
+POST http://localhost:8080/springboot-kafka/v1/kafka/publish/test-topic2?message=key2:topic2testmsg2

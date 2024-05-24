@@ -49,20 +49,20 @@ public class KafkaConsumer {
    * @param message message to consume
    * @param partition partition of stored message
    */
-  @KafkaListener(topicPartitions = @TopicPartition(topic = "test-topic1", partitions = {"0", "2", "5"}))
+  @KafkaListener(id = "testIdPartition", topicPartitions = @TopicPartition(topic = "test-topic1", partitions = {"0", "2", "5"}))
   public void listenToPartition(
       @Payload String message,
       @Header(KafkaHeaders.RECEIVED_PARTITION) int partition) {
-    LOGGER.info("Partition Message {} received from Topix{} | Partition {} ", message, "test-topic1",
+    LOGGER.info("Partition Message {} received from Topic {} | Partition {} ", message, "test-topic1",
         partition);
   }
 
   /**
-   * Fetch all messages from the given offset of the specific Partitions of the Topic
+   * Fetch all messages from the given offset of the specific given Partitions of the Topic
    * @param message message to consume
    * @param partition partition of stored message
    */
-  @KafkaListener(
+  @KafkaListener(id = "testIdOffsetPartition",
       topicPartitions = @TopicPartition(topic = "test-topic1",
           partitionOffsets = {
               @PartitionOffset(partition = "0", initialOffset = "8"),
@@ -71,6 +71,16 @@ public class KafkaConsumer {
       @Payload String message,
       @Header(KafkaHeaders.RECEIVED_PARTITION) int partition) {
     LOGGER.info("Partition with offset Message {} received from Topic {} | Partition {} ", message, "test-topic1",
+        partition);
+  }
+
+  @KafkaListener(id = "testIdFilter",
+      topics = {"test-topic1", "test-topic2"},
+      containerFactory = "filterKafkaListenerContainerFactory")
+  public void listenWithFilter(@Payload String message,
+      @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+      @Header(KafkaHeaders.RECEIVED_PARTITION) int partition) {
+    LOGGER.info("Filter (not containing 'test') message {} received from Topic {} | Partition {} ", message, topic,
         partition);
   }
 }
