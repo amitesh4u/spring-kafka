@@ -1,4 +1,4 @@
-package com.amitesh.springbootkafka;
+package com.amitesh.springbootkafka.config;
 
 
 import org.apache.kafka.clients.admin.NewTopic;
@@ -10,7 +10,7 @@ import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.KafkaTemplate;
 
 @Configuration
-public class AppConfig {
+public class KafkaTopicConfig {
 
   /**
    * The NewTopic bean causes the topic to be created on the broker; it is not needed if the topic
@@ -46,16 +46,13 @@ public class AppConfig {
     System.out.println(in);
   }
 
-  /* Producer for Topic 1 */
+  /* Producer for Topics */
   @Bean
-  public ApplicationRunner runner1(KafkaTemplate<String, String> template) {
-    return args -> template.send("test-topic1", "test1");
-  }
-
-  /* Producer for Topic 2 */
-  @Bean
-  public ApplicationRunner runner2(KafkaTemplate<String, String> template) {
-    return args -> template.send("test-topic2", "test2");
+  public ApplicationRunner runner(KafkaTemplate<String, String> template) {
+    return args -> {
+      template.send("test-topic1", "test1");
+      template.send("test-topic2", "test2");
+    };
   }
 
 }
