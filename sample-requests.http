@@ -1,0 +1,5 @@
+### Send a message to Topic 1
+POST http://localhost:8080/springboot-kafka/v1/kafka/publish/test-topic1?key=5&message=topic1msg1
+
+### Send a message to Topic 2
+POST http://localhost:8080/springboot-kafka/v1/kafka/publish/test-topic2?key=5&message=topic2msg1

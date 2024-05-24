@@ -40,19 +40,19 @@ public class KafkaTopicConfig {
         .build();
   }
 
-  /* Consumer for Topic1 and Topic 2 */
-  @KafkaListener(id = "testId", topics = {"test-topic1", "test-topic2"})
-  public void listen(String in) {
-    System.out.println(in);
-  }
-
-  /* Producer for Topics */
-  @Bean
-  public ApplicationRunner runner(KafkaTemplate<String, String> template) {
-    return args -> {
-      template.send("test-topic1", "test1");
-      template.send("test-topic2", "test2");
-    };
-  }
+//  /* Consumer for Topic1 and Topic 2 */
+//  @KafkaListener(id = "testId", topics = {"test-topic1", "test-topic2"})
+//  public void listen(String in) {
+//    System.out.println(in);
+//  }
+//
+//  /* Producer for Topics */
+//  @Bean
+//  public ApplicationRunner runner(KafkaTemplate<String, String> template) {
+//    return args -> {
+//      template.send("test-topic1", "test1");
+//      template.send("test-topic2", "test2");
+//    };
+//  }
 
 }
