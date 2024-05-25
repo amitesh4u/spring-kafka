@@ -1,4 +1,4 @@
-package com.amitesh.springbootkafka.config;
+package com.amitesh.springbootkafka.config.v1;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class KafkaConsumerConfig {
   private String groupId;
 
   @Bean
-  public ConsumerFactory<String, String> consumerFactory() {
+  public ConsumerFactory<String, String> filterConsumerFactory() {
     Map<String, Object> props = new HashMap<>();
     props.put(
         ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
@@ -44,7 +44,7 @@ public class KafkaConsumerConfig {
 
     ConcurrentKafkaListenerContainerFactory<String, String> factory =
         new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(consumerFactory());
+    factory.setConsumerFactory(filterConsumerFactory());
     factory.setRecordFilterStrategy(
         record -> record.value().contains("test"));
     return factory;

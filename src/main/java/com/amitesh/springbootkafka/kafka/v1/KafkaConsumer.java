@@ -1,4 +1,4 @@
-package com.amitesh.springbootkafka.kafka;
+package com.amitesh.springbootkafka.kafka.v1;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;

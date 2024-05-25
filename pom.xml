@@ -63,6 +63,11 @@
           <groupId>commons-collections</groupId>
           <artifactId>commons-collections</artifactId>
         </exclusion>
+        <!-- Exclude Logback classic as it conflicts with Slf4j -->
+          <exclusion>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+          </exclusion>
       </exclusions>
     </dependency>
     <dependency>

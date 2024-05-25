@@ -1,6 +1,6 @@
 package com.amitesh.springbootkafka.controller;
 
-import com.amitesh.springbootkafka.kafka.KafkaProducer;
+import com.amitesh.springbootkafka.kafka.v1.KafkaProducer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/kafka")
-public class KafkaController {
+public class KafkaControllerV1 {
 
   private final KafkaProducer kafkaProducer;
 
-  public KafkaController(KafkaProducer kafkaProducer) {
+  public KafkaControllerV1(KafkaProducer kafkaProducer) {
     this.kafkaProducer = kafkaProducer;
   }
 
