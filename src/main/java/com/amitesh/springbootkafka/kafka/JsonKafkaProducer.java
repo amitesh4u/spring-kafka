@@ -1,5 +1,6 @@
 package com.amitesh.springbootkafka.kafka;
 
+import com.amitesh.springbootkafka.payload.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -10,14 +11,14 @@ public class JsonKafkaProducer {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(JsonKafkaProducer.class);
 
-  private final KafkaTemplate<String, String> kafkaTemplate;
+  private final KafkaTemplate<String, Message> jsonMessageKafkaTemplate;
 
-  public JsonKafkaProducer(KafkaTemplate<String, String> kafkaTemplate) {
-    this.kafkaTemplate = kafkaTemplate;
+  public JsonKafkaProducer(KafkaTemplate<String, Message> jsonMessageKafkaTemplate) {
+    this.jsonMessageKafkaTemplate = jsonMessageKafkaTemplate;
   }
 
-  public void sendMessage(final String topic, final String message){
+  public void sendMessage(final String topic, final Message message){
     LOGGER.info("Message {} sent to Topic {}", message, topic);
-    kafkaTemplate.send(topic, message);
+    jsonMessageKafkaTemplate.send(topic, message);
   }
 }

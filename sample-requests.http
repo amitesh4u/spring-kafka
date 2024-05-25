@@ -3,3 +3,6 @@ POST http://localhost:8080/springboot-kafka/v1/kafka/publish/test-topic1?message
 
 ### Send a message to Topic 2
 POST http://localhost:8080/springboot-kafka/v1/kafka/publish/test-topic2?message=key2:topic2testmsg2
+
+### Send a message to Message Topic
+POST http://localhost:8080/springboot-kafka/v2/kafka/publish/message-topic?sender=testSender&receiver=testReceiver&message=testMessage
