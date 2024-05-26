@@ -13,6 +13,10 @@ It has sample consumers with
 There is additional code in _KafkaTopicConfig_ class to produce and consume
 test data during application startup
 
+### b) Version 2 contains code using _Json Serializer_
+
+### c) Version 3 contains code using _Json Serializer_ with multiple Object Type
+* It uses RecordMessageConverter and KafkaHandler to handle different message type
 
 
 ### Note:
