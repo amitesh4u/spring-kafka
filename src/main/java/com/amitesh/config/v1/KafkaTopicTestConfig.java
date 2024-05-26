@@ -1,7 +1,9 @@
-package com.amitesh.springbootkafka.config.v1;
+package com.amitesh.config.v1;
 
 
 import org.apache.kafka.clients.admin.NewTopic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +13,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 
 @Configuration
 public class KafkaTopicTestConfig {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(KafkaTopicTestConfig.class);
 
   /**
    * The NewTopic bean causes the topic to be created on the broker; it is not needed if the topic
@@ -42,8 +46,8 @@ public class KafkaTopicTestConfig {
 
   /* Consumer for Topic1 and Topic 2. Runs during Startup */
   @KafkaListener(id = "testIdStartup", topics = {"test-topic1", "test-topic2"})
-  public void listen(String in) {
-    System.out.println(in);
+  public void listen(String message) {
+    LOGGER.info("Message {} received through Startup Test listener", message);
   }
 
   /* Producer for Topics. Runs during startup */

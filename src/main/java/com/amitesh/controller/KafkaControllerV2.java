@@ -1,6 +1,7 @@
-package com.amitesh.springbootkafka.controller;
+package com.amitesh.controller;
 
-import com.amitesh.springbootkafka.kafka.v1.KafkaProducer;
+import com.amitesh.kafka.v2.JsonKafkaProducer;
+import com.amitesh.payload.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,19 +10,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/kafka")
-public class KafkaControllerV1 {
+@RequestMapping("/v2/kafka")
+public class KafkaControllerV2 {
 
-  private final KafkaProducer kafkaProducer;
+  private final JsonKafkaProducer kafkaProducer;
 
-  public KafkaControllerV1(KafkaProducer kafkaProducer) {
-    this.kafkaProducer = kafkaProducer;
+  public KafkaControllerV2(JsonKafkaProducer jsonkafkaProducer) {
+    this.kafkaProducer = jsonkafkaProducer;
   }
 
   @PostMapping("/publish/{topic}")
   public ResponseEntity<String> produce(@PathVariable String topic,
+      @RequestParam String sender, @RequestParam String receiver,
       @RequestParam("message") String message) {
-    kafkaProducer.sendMessage(topic, message);
+    kafkaProducer.sendMessage(topic, new Message(sender, receiver, message));
     return ResponseEntity.ok("Message Received");
   }
 }

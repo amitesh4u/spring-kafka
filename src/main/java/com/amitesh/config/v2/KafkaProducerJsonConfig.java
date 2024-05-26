@@ -1,5 +1,6 @@
-package com.amitesh.springbootkafka.config.v1;
+package com.amitesh.config.v2;
 
+import com.amitesh.payload.Message;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -13,13 +14,13 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 @Configuration
-public class KafkaProducerTestConfig {
+public class KafkaProducerJsonConfig {
 
   @Value(value = "${spring.kafka.bootstrap-servers}")
   private String bootstrapAddress;
 
   @Bean
-  public ProducerFactory<String, String> producerFactory() {
+  public ProducerFactory<String, Message> jsonMessageProducerFactory() {
     Map<String, Object> configProps = new LinkedHashMap<>();
     configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
     configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -28,7 +29,7 @@ public class KafkaProducerTestConfig {
   }
 
   @Bean
-  public KafkaTemplate<String, String> kafkaTemplate() {
-    return new KafkaTemplate<>(producerFactory());
+  public KafkaTemplate<String, Message> jsonMessageKafkaTemplate() {
+    return new KafkaTemplate<>(jsonMessageProducerFactory());
   }
 }

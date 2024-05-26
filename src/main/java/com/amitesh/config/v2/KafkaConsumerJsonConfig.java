@@ -1,5 +1,6 @@
-package com.amitesh.springbootkafka.config.v1;
+package com.amitesh.config.v2;
 
+import com.amitesh.payload.Message;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -10,39 +11,39 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 @Configuration
-public class KafkaConsumerTestConfig {
+public class KafkaConsumerJsonConfig {
 
   @Value(value = "${spring.kafka.bootstrap-servers}")
   private String bootstrapAddress;
 
-  @Value(value = "${kafka.consumer.test.group-id")
+  @Value(value = "${kafka.consumer.json.group-id")
   private String groupId;
 
   @Value(value = "${spring.kafka.consumer.auto-offset-reset}")
   private String autoOffsetReset;
 
   @Bean
-  public ConsumerFactory<String, String> stringConsumerFactory() {
+  public ConsumerFactory<String, Message> jsonMessageConsumerFactory() {
     Map<String, Object> props = new LinkedHashMap<>();
     props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
     props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
     props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-    return new DefaultKafkaConsumerFactory<>(props);
+    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+    return new DefaultKafkaConsumerFactory<>(props,
+        new StringDeserializer(),
+        new JsonDeserializer<>(Message.class));
   }
 
   @Bean
-  public ConcurrentKafkaListenerContainerFactory<String, String>
-  filterKafkaListenerContainerFactory() {
-
-    ConcurrentKafkaListenerContainerFactory<String, String> factory =
+  public ConcurrentKafkaListenerContainerFactory<String, Message>
+  jsonMessageKafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, Message> factory =
         new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(stringConsumerFactory());
-    factory.setRecordFilterStrategy(
-        record -> record.value().contains("test"));
+    factory.setConsumerFactory(jsonMessageConsumerFactory());
     return factory;
   }
 

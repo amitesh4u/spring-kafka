@@ -1,6 +1,6 @@
-package com.amitesh.springbootkafka.kafka;
+package com.amitesh.kafka.v2;
 
-import com.amitesh.springbootkafka.payload.Message;
+import com.amitesh.payload.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -17,7 +17,7 @@ public class JsonKafkaProducer {
     this.jsonMessageKafkaTemplate = jsonMessageKafkaTemplate;
   }
 
-  public void sendMessage(final String topic, final Message message){
+  public void sendMessage(final String topic, final Message message) {
     LOGGER.info("Message {} sent to Topic {}", message, topic);
     jsonMessageKafkaTemplate.send(topic, message);
   }

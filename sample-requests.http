@@ -6,3 +6,15 @@ POST http://localhost:8080/springboot-kafka/v1/kafka/publish/test-topic2?message
 
 ### Send a message to Message Topic
 POST http://localhost:8080/springboot-kafka/v2/kafka/publish/message-topic?sender=testSender&receiver=testReceiver&message=testMessage
+
+### Send a Common message to Multi Message Topic
+POST http://localhost:8080/springboot-kafka/v3/kafka/publish/multi-message-topic/message?sender=testSender&receiver=testReceiver&message=Test Generic Message
+
+### Send an Email to Multi Message Topic
+POST http://localhost:8080/springboot-kafka/v3/kafka/publish/multi-message-topic/email?fromEmail=testFromEmail&toEmail=testToEmail&subject=testSubject&body=Test Email Body
+
+### Send a SMS to Multi Message Topic
+POST http://localhost:8080/springboot-kafka/v3/kafka/publish/multi-message-topic/sms?fromNumber=testFromNumber&toNumber=testToNumber&message=Test SMS Mesaage
+
+### Send String message to Multi Message Topic
+POST http://localhost:8080/springboot-kafka/v3/kafka/publish/multi-message-topic/message?message=Test Message

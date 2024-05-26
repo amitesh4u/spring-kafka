@@ -1,4 +1,4 @@
-package com.amitesh.springbootkafka.kafka.v1;
+package com.amitesh.kafka.v1;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

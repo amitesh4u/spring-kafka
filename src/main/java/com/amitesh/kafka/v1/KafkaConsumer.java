@@ -1,4 +1,4 @@
-package com.amitesh.springbootkafka.kafka.v1;
+package com.amitesh.kafka.v1;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
@@ -22,12 +22,14 @@ public class KafkaConsumer {
    *
    * @param message Message sent by Producer
    */
-  @KafkaListener(id = "testId", topics = {"test-topic1", "test-topic2"})
+  @KafkaListener(id = "testId", topics = {"test-topic1", "test-topic2"},
+      containerFactory = "stringKafkaListenerContainerFactory")
   public void consumeMessage(final String message) {
     LOGGER.info("Normal Message {} received", message);
   }
 
-  @KafkaListener(id = "testIdHeader", topics = {"test-topic1", "test-topic2"})
+  @KafkaListener(id = "testIdHeader", topics = {"test-topic1", "test-topic2"},
+      containerFactory = "stringKafkaListenerContainerFactory")
   public void consumeMessageWithHeader(final @Payload String message,
       @Header(value = KafkaHeaders.RECEIVED_KEY, required = false) Integer key,
       @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
@@ -38,7 +40,8 @@ public class KafkaConsumer {
         partition, key, ts);
   }
 
-  @KafkaListener(id = "testIdConsumerRecord", topics = {"test-topic1", "test-topic2"})
+  @KafkaListener(id = "testIdConsumerRecord", topics = {"test-topic1", "test-topic2"},
+      containerFactory = "stringKafkaListenerContainerFactory")
   public void consumeMessageWithConsumerRecord(final ConsumerRecord<String, String> record) {
     LOGGER.info("Consumer Record Message {} received from Topic {} | Partition {} | Key {} at {}",
         record.value(), record.topic(), record.partition(), record.key(), record.timestamp());
@@ -49,7 +52,8 @@ public class KafkaConsumer {
    * @param message message to consume
    * @param partition partition of stored message
    */
-  @KafkaListener(id = "testIdPartition", topicPartitions = @TopicPartition(topic = "test-topic1", partitions = {"0", "2", "5"}))
+  @KafkaListener(id = "testIdPartition", topicPartitions = @TopicPartition(topic = "test-topic1", partitions = {"0", "2", "5"}),
+      containerFactory = "stringKafkaListenerContainerFactory")
   public void listenToPartition(
       @Payload String message,
       @Header(KafkaHeaders.RECEIVED_PARTITION) int partition) {
@@ -66,7 +70,8 @@ public class KafkaConsumer {
       topicPartitions = @TopicPartition(topic = "test-topic1",
           partitionOffsets = {
               @PartitionOffset(partition = "0", initialOffset = "8"),
-              @PartitionOffset(partition = "1", initialOffset = "1")}))
+              @PartitionOffset(partition = "1", initialOffset = "1")}),
+      containerFactory = "stringKafkaListenerContainerFactory")
   public void listenToPartitionWithOffset(
       @Payload String message,
       @Header(KafkaHeaders.RECEIVED_PARTITION) int partition) {

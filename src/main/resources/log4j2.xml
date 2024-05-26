@@ -10,7 +10,7 @@
     </Appenders>
     <Loggers>
         <!-- Additivity: Gets or sets a value indicating if child loggers inherit their parent's appenders. -->
-      <AsyncLogger name="com.amitesh.springbootkafka" level="info" additivity="false" includeLocation="false">
+      <AsyncLogger name="com.amitesh" level="info" additivity="false" includeLocation="false">
           <AppenderRef ref="ConsoleAppender" />
       </AsyncLogger>
       <AsyncRoot level="error">

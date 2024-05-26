@@ -1,4 +1,4 @@
-package com.amitesh.springbootkafka;
+package com.amitesh;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -27,19 +27,20 @@ public class KafkaRecordReader {
 
     try (KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumerProperties)) {
       Map<String, List<PartitionInfo>> stringListMap = consumer.listTopics(Duration.ofSeconds(3));
+      LOGGER.info("Topic list size: " + stringListMap.size());
       for (Entry<String, List<PartitionInfo>> entry : stringListMap.entrySet()) {
         String topic = entry.getKey();
         if (!IGNORED_TOPICS.contains(topic)) { // Ignore internal Topic
           List<Integer> partitions = entry.getValue().stream().map(PartitionInfo::partition)
               .toList();
           LOGGER.info("Topic: " + topic + " | Partitions: " + partitions);
-          printTopicRecords(consumer, topic, partitions);
+          printTopicPartitionRecords(consumer, topic, partitions);
         }
       }
     }
   }
 
-  private static void printTopicRecords(final KafkaConsumer<String,String> consumer,
+  private static void printTopicPartitionRecords(final KafkaConsumer<String,String> consumer,
       final String topic, final List<Integer> partitionNums) {
     List<TopicPartition> partitions = new ArrayList<>();//List.of(partition);
     partitionNums.forEach(partitionNum1 -> partitions.add(new TopicPartition(topic, partitionNum1)));
@@ -55,9 +56,12 @@ public class KafkaRecordReader {
     consumer.seekToBeginning(partitions);
 
     ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(2));
-
-    for (ConsumerRecord<String, String> record : records) {
-      LOGGER.info(String.valueOf(record));
+    if(records.isEmpty()){
+      LOGGER.info("No data present");
+    }else {
+      for (ConsumerRecord<String, String> record : records) {
+        LOGGER.info(String.valueOf(record));
+      }
     }
   }
 

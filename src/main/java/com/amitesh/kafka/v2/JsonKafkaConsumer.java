@@ -1,6 +1,6 @@
-package com.amitesh.springbootkafka.kafka;
+package com.amitesh.kafka.v2;
 
-import com.amitesh.springbootkafka.payload.Message;
+import com.amitesh.payload.Message;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,7 @@ public class JsonKafkaConsumer {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(JsonKafkaConsumer.class);
 
-  @KafkaListener(id = "messageConsumerId", topics = "message-topic",
+  @KafkaListener(id = "${kafka.consumer.json.group-id", topics = "message-topic",
       containerFactory = "jsonMessageKafkaListenerContainerFactory")
   public void consumeMessageWithConsumerRecord(final ConsumerRecord<String, Message> record, final Message message) {
     LOGGER.info("Consumer Record Message {} received from Topic {} | Partition {} | Offset {} at {}",

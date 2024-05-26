@@ -1,4 +1,4 @@
-package com.amitesh.springbootkafka;
+package com.amitesh;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
